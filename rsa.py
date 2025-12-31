@@ -1,3 +1,8 @@
+import math
+import secrets
+
+
+
 def is_prime(n):
     if n < 2 :
         return False
@@ -41,3 +46,28 @@ def generate_keys():
     pri_key = (d, n)
 
     return pub_key, pri_key
+
+def encrypt(message, public_key):
+    e, n = public_key
+    if not 0 <= message < n:
+        raise ValueError("メッセージは0以上n未満にしてください")
+    return pow(message, e, n)
+
+
+def decrypt(cipher, private_key):
+    d, n = private_key
+    if not 0 <= cipher < n:
+        raise ValueError("暗号文は0以上n未満にしてください")
+    return pow(cipher, d, n)
+if __name__ == "__main__":
+    public_key, private_key = generate_keys()
+
+    message = 65
+    cipher = encrypt(message, public_key)
+    decoded = decrypt(cipher, private_key)
+
+    print("公開鍵:", public_key)
+    print("秘密鍵:", private_key)
+    print("元の数値:", message)
+    print("暗号文:", cipher)
+    print("復号結果:", decoded)
