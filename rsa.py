@@ -59,6 +59,45 @@ def decrypt(cipher, private_key):
     if not 0 <= cipher < n:
         raise ValueError("暗号文は0以上n未満にしてください")
     return pow(cipher, d, n)
+
+
+def text_to_numbers(text):
+    numbers = []
+
+    for char in text:
+        if not char.isascii():
+            raise ValueError("ASCII文字のみ")
+
+        numbers.append(ord(char))
+
+    return numbers
+def numbers_to_text(numbers):
+    change_num_text = []
+
+    for number in numbers:
+        change_num_text.append(chr(number))
+
+    return "".join(change_num_text)
+
+def encrypt_text(text, public_key):
+    numbers = text_to_numbers(text)
+    encrypted = []
+
+    for number in numbers:
+        encrypted.append(enct(number, public_key))
+
+    return encrypted
+
+
+def decrypt_text(cipher_numbers, private_key):
+    decrypted = []
+
+    for cipher in cipher_numbers:
+        decrypted.append(dect(cipher, private_key))
+    decrypted = numbers_to_text(decrypted)
+    
+    return decrypted
+
 if __name__ == "__main__":
     public_key, private_key = generate_keys()
 
