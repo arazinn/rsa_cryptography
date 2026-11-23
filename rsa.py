@@ -2,6 +2,28 @@ import math
 import secrets
 
 
+def save_keys(public_key, private_key):
+    e, n = public_key
+    d, _ = private_key
+
+    with open("public.key", "w") as f:
+        json.dump({"e": e, "n": n}, f)
+
+    with open("private.key", "w") as f:
+        json.dump({"d": d, "n": n}, f)
+
+def load_public_key():
+    with open("public.key", "r") as f:
+        data = json.load(f)
+
+    return (data["e"], data["n"])
+
+
+def load_private_key():
+    with open("private.key", "r") as f:
+        data = json.load(f)
+
+    return (data["d"], data["n"])
 
 def is_prime(n):
     if n < 2 :
