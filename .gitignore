@@ -2,3 +2,4 @@ private.key
 public.key
 cipher.json
 __pycache__/
+*.pyc

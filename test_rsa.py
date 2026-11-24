@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: 2026 Akito Yamada
+# SPDX-License-Identifier: MIT
+
+
+
 import unittest
 from rsa import *
 

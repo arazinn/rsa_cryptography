@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# SPDX-FileCopyrightText: 2026 Akito Yamada
+# SPDX-License-Identifier: MIT
+
+
 import math
 import secrets
 import sys
