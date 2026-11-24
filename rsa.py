@@ -1,5 +1,8 @@
+#!/usr/bin/env python3
 import math
 import secrets
+import sys
+import json
 
 
 def save_keys(public_key, private_key):
@@ -24,6 +27,7 @@ def load_private_key():
         data = json.load(f)
 
     return (data["d"], data["n"])
+
 
 def is_prime(n):
     if n < 2 :
@@ -69,14 +73,14 @@ def generate_keys():
 
     return pub_key, pri_key
 
-def encrypt(message, public_key):
+def enct(message, public_key):
     e, n = public_key
     if not 0 <= message < n:
         raise ValueError("メッセージは0以上n未満にしてください")
     return pow(message, e, n)
 
 
-def decrypt(cipher, private_key):
+def dect(cipher, private_key):
     d, n = private_key
     if not 0 <= cipher < n:
         raise ValueError("暗号文は0以上n未満にしてください")
@@ -121,13 +125,42 @@ def decrypt_text(cipher_numbers, private_key):
     return decrypted
 
 if __name__ == "__main__":
-    public_key, private_key = generate_keys()
+    if len(sys.argv) < 2:
+        print("モードを指定してください")
+        sys.exit(1)
 
-    message = "Hello World"
-    numbers = text_to_numbers(message)
-    decoded = numbers_to_text(numbers)
-    print("公開鍵:", public_key)
-    print("秘密鍵:", private_key)
-    print("元の数値:", message)
-    print("暗号文:", numbers)
-    print("復号結果:", decoded)
+    mode = sys.argv[1]
+    if mode == "keygen":
+        public_key, private_key = generate_keys()
+
+        save_keys(public_key, private_key)
+
+        print("鍵を生成して保存しました")
+        print("公開鍵: public.key")
+        print("秘密鍵: private.key")
+    elif mode == "encrypt":
+
+        public_key = load_public_key()
+
+        message = sys.stdin.read().rstrip("\r\n")
+
+        cipher = encrypt_text(message, public_key)
+
+        sys.stdout.write(json.dumps(cipher) + "\n")
+        print("暗号文をcipher.jsonファイルに保存しました", file=sys.stderr)
+        print(cipher, file=sys.stderr)
+
+
+    elif mode == "decrypt":
+        private_key = load_private_key()
+
+        cipher_text = sys.stdin.read()
+
+        cipher_numbers = json.loads(cipher_text)
+
+        decoded = decrypt_text(cipher_numbers, private_key)
+
+        sys.stdout.write(decoded + "\n")
+    else:
+        print("不明なモードです")
+        sys.exit(1)
