@@ -123,12 +123,11 @@ def decrypt_text(cipher_numbers, private_key):
 if __name__ == "__main__":
     public_key, private_key = generate_keys()
 
-    message = 65
-    cipher = encrypt(message, public_key)
-    decoded = decrypt(cipher, private_key)
-
+    message = "Hello World"
+    numbers = text_to_numbers(message)
+    decoded = numbers_to_text(numbers)
     print("公開鍵:", public_key)
     print("秘密鍵:", private_key)
     print("元の数値:", message)
-    print("暗号文:", cipher)
+    print("暗号文:", numbers)
     print("復号結果:", decoded)
