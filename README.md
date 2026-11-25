@@ -18,7 +18,7 @@ RSA暗号の鍵生成、暗号化、復号を行う学習用のLinuxコマンド
 
 ```console
 $ git clone https://github.com/arazinn/rsa_cryptography.git
-$ cd リポジトリ名
+$ cd rsa_cryptography
 $ chmod +x rsa.py
 ```
 
