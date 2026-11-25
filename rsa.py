@@ -130,7 +130,7 @@ def decrypt_text(cipher_numbers, private_key):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("モードを指定してください")
+        print("モードを指定してください", file=sys.stderr)
         sys.exit(1)
 
     mode = sys.argv[1]
@@ -161,5 +161,5 @@ if __name__ == "__main__":
 
         sys.stdout.write(decoded + "\n")
     else:
-        print("不明なモードです")
+        print("不明なモードです", file=sys.stderr)
         sys.exit(1)
